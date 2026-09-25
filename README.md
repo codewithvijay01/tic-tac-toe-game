@@ -34,3 +34,22 @@ tic-tac-toe-game/
 ├── click.mp3
 ├── Victory.mp3
 └── README.md
+
+## 🎯 How to Play
+
+1. Open the game using the Live Demo link.
+2. Player 1 plays as `X`.
+3. Player 2 plays as `O`.
+4. Take turns placing your symbol.
+5. The first player to get three symbols in a row wins.
+6. If all cells are filled without a winner, the game is a draw.
+
+## 👨‍💻 Author
+
+**Vijay**
+
+GitHub: [@codewithvijay01](https://github.com/codewithvijay01)
+
+## 📄 License
+
+This project is open source and available for learning and personal use.
