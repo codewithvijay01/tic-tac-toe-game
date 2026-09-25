@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102a43" />
+  <title>Tic Tac Toe — Level Challenge</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="confetti-container hide" id="confetti" aria-hidden="true"></div>
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <p class="eyebrow">VIJAY'S GAME ARENA</p><h1>Player Profile</h1>
+      <p class="auth-intro">Apni profile mein login karein ya nayi profile banayein. Har player ka game alag save hoga.</p>
+      <div class="auth-tabs"><button class="auth-tab active" data-auth="login">Login</button><button class="auth-tab" data-auth="create">Nayi profile</button></div>
+      <form id="login-form"><label>Player ID<input id="login-id" autocomplete="username" placeholder="Apna Player ID" required /></label><button class="auth-submit" type="submit">Profile kholein</button></form>
+      <form id="create-form" class="hide"><label>Aapka naam<input id="create-name" maxlength="24" placeholder="Jaise: Vijay" required /></label><label>Naya Player ID<input id="create-id" maxlength="20" autocomplete="username" placeholder="Jaise: vijay_01" required /></label><button class="auth-submit" type="submit">Profile banayein</button></form>
+      <p id="auth-message" aria-live="polite"></p><p class="local-note">Profile isi browser/device par save hoti hai.</p>
+    </div>
+  </section>
+  <div class="msg-container hide" id="result-dialog" role="dialog" aria-live="polite">
+    <div class="win-burst" aria-hidden="true">🏆</div><p id="msg">Winner</p><p id="reward-msg" class="reward-msg"></p><button id="new-btn">Next round</button>
+  </div>
+  <div class="replay-dialog hide" id="replay-dialog" role="dialog" aria-modal="true" aria-label="Match replay">
+    <div class="replay-panel"><button class="close-btn" id="close-replay" aria-label="Close replay">×</button><p class="eyebrow">MATCH REPLAY</p><h2 id="replay-title">Last game</h2><div class="replay-board" id="replay-board"></div><p id="replay-caption">Move 0</p><input id="replay-slider" type="range" min="0" max="0" value="0" /><div class="replay-actions"><button class="secondary-btn" id="replay-prev">← Previous</button><button class="secondary-btn" id="replay-play">▶ Play</button><button class="secondary-btn" id="replay-next">Next →</button></div></div>
+  </div>
+  <main id="game-app" class="hide">
+    <header><div class="profile-bar"><span>👤 <b id="profile-name">Player</b> · <small id="profile-tag"></small></span><button id="logout-btn">Switch profile</button></div><p class="eyebrow">VIJAY'S GAME ARENA</p><h1>Tic Tac Toe</h1><p class="subtitle">Level jeeto, streak banao, challenge complete karo.</p></header>
+    <section class="arena-card"><div class="arena-title"><span>🏅 ARENA PROFILE</span><span id="rank-title">Rookie</span></div><div class="arena-metrics"><div><small>XP</small><b id="xp-count">0</b></div><div><small>COINS</small><b>🪙 <span id="coin-count">0</span></b></div><div><small>BEST STREAK</small><b id="arena-streak">0 🔥</b></div></div><div class="xp-track"><span id="xp-bar"></span></div><p id="xp-next">Earn XP by playing!</p></section>
+    <section class="level-card">
+      <div class="level-topline"><h2 id="level-label">Level 1: Easy</h2><span class="progress-note">Jeetne par next level unlock</span></div>
+      <div class="level-buttons"><button class="level-btn" data-level="0">Easy</button><button class="level-btn" data-level="1">Medium</button><button class="level-btn" data-level="2">Hard</button></div>
+      <p id="level-hint"></p>
+    </section>
+    <section class="tools-card">
+      <div class="control-row"><label>Mode<select id="mode-select"><option value="ai">Player vs AI</option><option value="local">2 players</option><option value="daily">Daily challenge</option><option value="boss">👹 Boss battle</option></select></label>
+        <label id="series-label">Match<select id="series-select"><option value="1">Single round</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
+        <label>Theme<select id="theme-select"><option value="ocean">Ocean</option><option value="sunset">Sunset 🔒 30🪙</option><option value="forest">Forest 🔒 60🪙</option></select></label>
+        <label>Board<select id="board-select"><option value="classic">Classic</option><option value="neon">Neon 🔒 40🪙</option><option value="galaxy">Galaxy 🔒 80🪙</option></select></label></div>
+      <div class="control-row compact"><button id="undo-btn" class="secondary-btn">↶ Undo</button><button id="replay-btn" class="secondary-btn">▶ Replay</button><button id="sound-btn" class="secondary-btn" aria-pressed="true">🔊 Sound on</button><button id="reset-btn" class="secondary-btn">Restart</button></div>
+    </section>
+    <section id="boss-banner" class="boss-banner hide"><div class="boss-heading"><span id="boss-emoji">👹</span><div><b id="boss-name">Boss Battle</b><small id="boss-rule">Board rule</small></div><span id="boss-badge-count">0 / 3 badges</span></div><p id="boss-desc"></p></section>
+    <section class="score-card"><div><span class="score-name" id="player-o-name">You (O)</span><strong id="score-o">0</strong></div><div><span class="score-name">Draws</span><strong id="score-draw">0</strong></div><div><span class="score-name" id="player-x-name">AI (X)</span><strong id="score-x">0</strong></div><p id="match-status">Single round</p></section>
+    <div class="status" id="status" aria-live="polite">Aapki baari — O</div>
+    <div class="game-wrap"><div class="game" role="group" aria-label="Tic Tac Toe board">
+      <button class="box" aria-label="Top left"></button><button class="box" aria-label="Top center"></button><button class="box" aria-label="Top right"></button>
+      <button class="box" aria-label="Middle left"></button><button class="box" aria-label="Center"></button><button class="box" aria-label="Middle right"></button>
+      <button class="box" aria-label="Bottom left"></button><button class="box" aria-label="Bottom center"></button><button class="box" aria-label="Bottom right"></button>
+    </div></div>
+    <section class="stats-card"><div class="hall-title"><h2>🏆 Hall of Fame</h2><span id="hall-rank">Rookie</span></div><div class="stats-grid"><span>Wins <b id="stat-wins">0</b></span><span>Losses <b id="stat-losses">0</b></span><span>Draws <b id="stat-draws">0</b></span><span>Best streak <b id="stat-streak">0</b></span></div><p class="hall-foot" id="hall-record">Your arena journey starts here.</p><div id="badge-shelf" class="badge-shelf"></div></section>
+    <p class="tip"><span>TIP</span> Center aur corners par pehle nazar rakho — aur AI ki possible line ko rokna na bhoolein.</p>
+    <footer class="creator-credit">Created by <strong>Vijay Yadav</strong></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
